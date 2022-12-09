@@ -11,14 +11,19 @@ public_users.post("/register", (req,res) => {
   const password = req.query.password;
   if (!userName || userName==""){
       res.send("Please provide a User Name");}
-  else if (userName in users){
+  else { //if (userName in users){
+    let filtered_users = users.filter((user) => user.userName === userName);
+    if (filtered_users.length > 0) {
       res.send("User already exists. Please log in");}
-  else if (!password || password==""){
+    else if (!password || password==""){
       res.send("Please provide a password");}
   // all looks good
-  users.push({"userName":userName,"password":password});
-  res.send("The user" + (' ')+ (req.query.userName) + " has been added!")
+    else {
+      users.push({"userName":userName,"password":password});
+    //  regd_users.push({"userName":userName,"password":password});
+      res.send("The user" + (' ')+ (req.query.userName) + " has been added!")}
   // return res.status(300).json({message: "Yet to be implemented"});
+  }
 });
 
 // Get the book list available in the shop

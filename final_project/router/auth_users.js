@@ -7,8 +7,8 @@ let users = [];
 
 const isValid = (username)=>{ //returns boolean
 //write code to check is the username is valid
-    if (!username || username=="") {return False}
-    else {return True}
+    if (!username || username=="") {return false}
+    else {return true}
 }
 
 const authenticatedUser = (username,password)=>{ //returns boolean
@@ -16,9 +16,9 @@ const authenticatedUser = (username,password)=>{ //returns boolean
     let filtered_users = users.filter((user) => user.userName === username);
     if (filtered_users.length > 0) {
         let filtered_user= filtered_users[0];
-        if (filtered_user.password==password) return True;
+        if (filtered_user.password==password) return true;
     }
-    else return False
+    else return false
 }
 
 //only registered users can login
