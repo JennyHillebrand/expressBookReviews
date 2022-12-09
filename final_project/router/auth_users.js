@@ -48,7 +48,8 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
   const isbn=req.params.isbn;
   const review=req.query.review;
-  const username=req.user;
+  const username=req.user["data"];
+  // console.log("here ", username)
   if (!(isbn in books)){
       return res.status(300).json({message: "No such ISBN"})
   }
@@ -59,8 +60,28 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
   // return res.status(300).json({message: "Yet to be implemented"});
 });
-//regd_users.delete("/auth/review/:isbn", (req, res) => {
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+  const isbn=req.params.isbn;
+  const username=req.user["data"];
+  // console.log("here ", username)
+  if (!(isbn in books)){
+      return res.status(300).json({message: "No such ISBN"});
+  }
+  else {
+      newreviews={}
+      for (review in books[isbn]["reviews"]){
+        if (review[0] != username){
+            newreviews[review[0]]=review[1]}
 
+      }
+      books[isbn]["reviews"]=newreviews
+      //books[isbn]["reviews"] = books[isbn]["reviews"].filter((user) => user[0] != username);
+      res.send("Reviews for ISBN ", isbn, " user ", username, " deleted");
+      //books[isbn]["reviews"][username]=review
+      //return res.status(200).json({message:"Review added successfully " + isbn +" " + review})
+
+  }
+});
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
