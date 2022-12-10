@@ -68,19 +68,12 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
       return res.status(300).json({message: "No such ISBN"});
   }
   else {
-      newreviews={}
-      for (review in books[isbn]["reviews"]){
-        if (review[0] != username){
-            newreviews[review[0]]=review[1]}
-
+      if (username in books[isbn]["reviews"]){
+          delete books[isbn]["reviews"][username]
+          res.send("review deleted")
       }
-      books[isbn]["reviews"]=newreviews
-      //books[isbn]["reviews"] = books[isbn]["reviews"].filter((user) => user[0] != username);
-      res.send("Reviews for ISBN ", isbn, " user ", username, " deleted");
-      //books[isbn]["reviews"][username]=review
-      //return res.status(200).json({message:"Review added successfully " + isbn +" " + review})
-
-  }
+      
+    }
 });
 
 module.exports.authenticated = regd_users;
