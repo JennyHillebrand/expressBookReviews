@@ -70,7 +70,7 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
   else {
       if (username in books[isbn]["reviews"]){
           delete books[isbn]["reviews"][username]
-          res.send("review deleted")
+          res.send("Review by " + username + " for book " + books[isbn]["title"] + " deleted")
       }
       
     }
